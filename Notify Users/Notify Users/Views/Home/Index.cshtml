@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+    <head>
+        <title>Notify Users through the Knockout JS</title>
+        <script src="~/Scripts/jquery-3.3.1.js"></script>
+        <script src="~/Scripts/knockout-3.5.0.js"></script>
+        <script>
+            $(function () {
+                function apply() {
+                    self.Name = ko.observable('Thiru').extend({ notify: 'always' });
+                }
+                ko.applyBindings(apply(), $("body")[0]);
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" data-bind="textInput:Name" value="aa"/>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<html>
+    <head>
+        <title>Ko.when</title>
+        <script src="~/Scripts/jquery-3.3.1.js"></script>
+        <script src="~/Scripts/knockout-3.5.0.js"></script>
+        <script>
+            self.Name = ko.observable();
+            function change() {
+                self.Name('Thirunavukkarasu');
+            }
+            ko.when(function () {
+                if (self.Name() === "TamilSelvi") {
+                    ko.applyBindings(change(),$("body")[0]);
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <input type="text" data-bind="value:Name" value="Thiru"/>
+
+    </body>
+</html>
