@@ -1,0 +1,34 @@
+<html>
+<head>
+<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+
+<title> Text Bindings</title>
+<style>
+h1{
+	text-align:center;
+	color:red;
+	
+}
+</style>
+
+</head>
+<body>
+<div id="header">
+<h1 data-bind="text:HeaderText()"> Text Bindings</h1>
+</div>
+<script type="text/javascript">
+$(function(){
+var textViewModel=function(){
+var self=this;
+self.HeaderText=ko.observable("Finally Initiated Knockout Js Learning");
+};
+setInterval(function(){
+ko.applyBindings(textViewModel, $("#header")[0]);
+},30000);
+
+});
+</script>
+
+</body>
+</html>
