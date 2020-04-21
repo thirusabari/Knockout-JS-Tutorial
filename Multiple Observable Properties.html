@@ -1,0 +1,43 @@
+<html>
+<head>
+<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+<title> Multiple Knockout Observable Properties </title>
+<style>
+#multiples{
+	width:1100px;
+	height:500px;
+	border:2px solid blue;
+	background-color:lightyellow;
+}
+</style>
+</head>
+<body>
+<div id="multiples">
+<p data-bind="text:FirstName()"></p>
+<br>
+<br>
+<p data-bind="text:LastName()"></p>
+<br>
+<br>
+<button data-bind="click: ChangeData">ChangeData</button>
+</div>
+<script type="text/javascript">
+var multiplePropertiesViewModel=function(){
+var self=this;
+self.FirstName=ko.observable("thiru");
+self.LastName=ko.observable("arasu");
+self.ChangeData=function(){
+var subself=this;
+if(subself.FirstName() && subself.LastName()){
+subself.FirstName("Arasu").LastName("Thiru");   // Multiple Knockout Observable Properties ReAssigning In Single Line
+}
+
+};
+};
+$(function(){
+ko.applyBindings(multiplePropertiesViewModel,$("#multiples")[0]);
+});
+</script>
+</body>
+</html>
