@@ -1,0 +1,38 @@
+<html>
+<head>
+<title> Before Change Event Assigning For the Knockout Subscribe Event </title>
+<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+<style>
+#before{
+	width:1250px;
+	height:550px;
+	border: 3px solid red;
+	background-color:lightblue;
+	color:white;
+}
+</style>
+</head>
+<body>
+<div id="before">
+<h1> Before Change Event for the Knockout Subscribe Event </h1>
+<br>
+<br>
+<input type="text" data-bind="value:beforeValue"/>
+</div>
+<script type="text/javascript">
+var beforeChangeViewModel=function(){
+var self=this;
+self.beforeValue=ko.observable("Before");
+self.beforeValue.subscribe(function(data){
+if(data){
+alert("The Before Value of the Input Text Box = "+data);
+}
+},null,"beforeChange");
+};
+$(function(){
+ko.applyBindings(beforeChangeViewModel,$("#before")[0]);
+});
+</script>
+</body>
+</html>

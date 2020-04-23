@@ -1,0 +1,47 @@
+<html>
+<head>
+<title> ko.when Example</title>
+<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+<style>
+#when
+{
+	width: 1250px;
+	height:550px;
+	border:2px solid gold;
+	background-color:lightgreen;
+}
+</style>
+</head>
+<body>
+<div id="when">
+<h1> ko.when Event </h1>
+<br>
+<br>
+<br>
+<input type="text" data-bind="value:FieldValue"/>
+
+<button data-bind="enable: isButtonEnable">isButtonEnabled<button>
+
+
+</div>
+<script type="text/javascript"> 
+var whenViewModel=function(){
+var self=this;
+self.FieldValue=ko.observable();
+self.isButtonEnable=ko.observable(false);
+ko.when(function(){
+return self.FieldValue() !== undefined;
+}, function(result){
+self.isButtonEnable(true);
+});
+};
+
+
+$(function(){
+ko.applyBindings(whenViewModel,$("#when")[0]);
+
+});
+</script>
+</body>
+</html>

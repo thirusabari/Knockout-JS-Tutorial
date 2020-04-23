@@ -1,0 +1,45 @@
+<html>
+<head>
+<title> Knockout Subscribe Example </title>
+<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+<style>
+#subscriptions{
+	width:1200px;
+	height:500px;
+}
+</style>
+</head>
+<body>
+<div id="subscriptions">
+<h1> Knockout Subscription</h1>
+<br>
+<br>
+<br>
+<Label for="input" > Enter Text: </label>
+<br>
+<input type="text" data-bind="value:InputValue"/>
+<br>
+<br>
+<br>
+<ul>
+<li id="nothing"></li>
+</ul>
+</div>
+<script type="text/javascript">
+var subViewModel=function(){
+var self=this;
+self.InputValue=ko.observable();
+self.InputValue.subscribe(function(data){
+if(data){
+$("#nothing").append("<li>"+data+"</li>");
+}
+});
+};
+
+$(function(){
+ko.applyBindings(subViewModel,$("#subscriptions")[0]);
+});
+</script>
+</body>
+</html>

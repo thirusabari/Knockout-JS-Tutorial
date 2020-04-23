@@ -1,0 +1,72 @@
+<html>
+<head>
+<title> Enable Binding </title>
+<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+<style>
+#enable{
+	width:1250px;
+	height:600px;
+	border: 2px solid black;
+	float:center;
+}
+</style>
+</head>
+<body>
+<div id="enable">
+<Label For="enableBindings"> Dynamic Drop Down List</lable>
+<br>
+<br>
+<Label for="AddItem"> Add Value</label>
+<input type="text" data-bind="value:NewItem" />
+<button data-bind="click: AddItem">AddItem</button>
+<br>
+<br>
+
+<br>
+<br>
+
+<p></p>
+<p></p>
+<br>
+<Label for="RemoveItem"> Remove Value</label>
+<input type="text" data-bind="value:RemoveValue"/>
+<button data-bind="enable: VerticalItems().length>5, click:RemoveItem">RemoveItem</button>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<select multiple="multiple" width="200" data-bind="options: VerticalItems()"></select>
+<br>
+<br>
+
+</div>
+<script type="text/javascript">
+$(function(){
+	var enableViewModel=function(){
+	var self=this;
+	self.NewItem=ko.observable();
+	self.RemoveValue=ko.observable();
+	self.VerticalItems=ko.observableArray(["thiru","arasu","sabari","prasanna","sagathguru"]);
+	self.AddItem=function(){
+	if(self.NewItem()  && self.VerticalItems.indexOf(self.NewItem())===-1 ){
+	self.VerticalItems.push(self.NewItem());
+	}
+	};
+	self.RemoveItem=function(){
+	var self=this;
+	if(self.RemoveValue() && self.VerticalItems.indexOf(self.RemoveValue())!==-1 ){
+	self.VerticalItems.remove(self.RemoveValue());
+	}
+	};
+};
+
+ko.applyBindings(enableViewModel,$("#enable")[0]);
+
+	});
+
+</script>
+</body>
+</html>
