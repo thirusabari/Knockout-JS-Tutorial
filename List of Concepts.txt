@@ -1,0 +1,9 @@
+Concepts:
+
+1. text Binding
+2. Enable Binding
+3. Multiple Observable Properties Assigning in Single Line
+4. Knockout Subscribe
+5. Before Change Event with Subscribe Event
+6. ko.when Event
+7. Extend (Notify: always)
