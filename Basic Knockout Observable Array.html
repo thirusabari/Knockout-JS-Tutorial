@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title> Basic Knockout Observable Array </title>
+	<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+	<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+	<link rel="stylesheet" href="./bootstrap.css">
+<style>
+#ListFullNames{
+	border:3px solid black;
+	width:1300px;
+	height:400px;
+	background-color:lighgrey;
+}
+
+</style>
+</head>
+<body>
+	<div id="basic_array">
+		<h1> Basic Knockout Observable Array </h1>
+			<div class="container">
+			<table class="table table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th> FirstName </th>
+						<th> LastName </th>
+						<th> Action </th>
+					</tr>	
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="text" data-bind="value:FirstName"/> </td>
+						<td><input type="text" data-bind="value:LastName"/></td>
+						<td><button data-bind="click:ComputeFullName" ><b> + </b></button></td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div id="ListFullNames">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th> FirstName </th>
+							<th> LastName </th>
+						</tr>	
+					</thead>
+						<tbody data-bind="foreach:UserName">
+							<tr>
+								<td data-bind="text:FName"></td>
+								<td data-bind="text:LName"></td>
+							</tr>
+						</tbody>
+					</table>
+			</div>
+	</div>
+<script type="text/javascript">
+var basicArrayViewModel=function() {
+	var self=this;
+	self.FirstName=ko.observable();
+	self.LastName=ko.observable();
+	self.UserName=ko.observableArray([]);
+	self.ComputeFullName=function() 
+	{
+		var subself=this;
+			if(subself.FirstName() && subself.LastName() )
+			{
+				var user = {
+					FName:subself.FirstName(),
+					LName:subself.LastName()
+				};
+				self.UserName.push(user);
+				subself.FirstName(undefined);
+				subself.LastName(undefined);
+			}
+	};
+};
+
+$(function () {
+	ko.applyBindings(basicArrayViewModel,$("#basic_array")[0]);
+});
+</script>
+</body>
+</html>
