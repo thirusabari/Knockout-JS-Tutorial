@@ -7,3 +7,4 @@ Concepts:
 5. Before Change Event with Subscribe Event
 6. ko.when Event
 7. notifyWhenChangesStop and ratelimit { timeout:400} with Knockout Extenders
+8. Basic Knockout Observable Array with Bootstrap tables
