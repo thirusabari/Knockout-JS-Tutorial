@@ -1,0 +1,153 @@
+<html>
+<head>
+	<title> Manipulating Knockout Observable Array </title>
+	<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+	<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+	<link rel="stylesheet" href="./bootstrap.css">
+	<style>
+	#manipulate{
+		height:550px;
+		width:1200px;
+	}
+	#footer{
+	display:none;
+	}
+	</style>
+</head>
+<body>
+
+	<div id="manipulate">
+	<div class="container">
+	<h1> Manipulating Knockout Observable Array</h1>
+	<span></span>
+	<select id="functions" class="dropdown-primary" data-bind="options:ArrayFunctions(),event:{ change: functionChanged}"></select>
+		<p></p>
+		<p></p>
+	<select multiple="multiple" width="400px" data-bind="options:DynamicArray()"></select>
+		<p></p>
+		<p></p>
+		<div id="footer">
+		<p id="msg"></p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var manipulationViewModel=function() {
+	var self=this;
+	self.ArrayFunctions = ko.observableArray(
+	[
+			"select",
+			"push",
+			"pop",
+			"unshift",
+			"shift",
+			"sort",
+			"splice",	
+			"sorted",
+			"reversed",
+			"replace",
+			"remove",
+			"removeAll",
+			"reverse",
+			"grep"
+	]
+	);
+
+	self.DynamicArray = ko.observableArray(self.ArrayFunctions.slice(2,self.ArrayFunctions().length-1));
+	self.functionChanged=function() {
+
+		var option=$("#functions option:selected" ).val();
+		var noRecord="No Records Found in the Array";
+	
+		if(option.length > 0){
+			var errorText;
+			self.ResetFoooter(errorText);
+			if(self.DynamicArray().length === 0){
+				self.ResetFoooter(noRecord);
+				self.ReloadPage();
+			} else {
+			
+				switch(option){
+					case "select":
+						self.ResetFoooter(option);
+						break;
+					case "push":
+						self.AddValue(option);
+						break;
+					case "pop":
+						self.DynamicArray.pop();
+						break;
+					case "shift":
+						self.DynamicArray.shift();
+						break;
+					case "unshift":
+						self.DynamicArray.unshift(option);
+						break;
+					case "reverse":
+					case "reversed":
+						self.DynamicArray.reverse();
+						break;
+					case "sort":
+					case "sorted":
+						self.DynamicArray.sort();
+						break;
+					case "splice":
+						var splices=self.ArrayFunctions.splice(7,self.ArrayFunctions().length-1);
+						self.DynamicArray([]);
+						self.DynamicArray(splices);
+						break;
+					case "replace":
+					    self.DynamicArray.replace("replace","modfiy");
+						break;
+					case "remove":
+						if(self.DynamicArray.indexOf(option) !== -1){
+							self.DynamicArray.remove(option);
+						} else{
+							self.DynamicArray.remove(self.DynamicArray()[0]);
+						}
+						break;
+					case "removeAll":
+						self.DynamicArray.removeAll();
+						self.ResetFoooter(noRecord);
+						self.ReloadPage();
+						break;
+					case "grep":
+						var result=$.grep(self.DynamicArray(), function(value, index) { return value.length>5; });
+						if(result.length>0){
+							self.DynamicArray(result);
+						} else{
+							self.ReloadPage();
+						}
+					
+				}
+			}
+		}
+	};
+	self.ResetFoooter=function(val) {
+		if(val === undefined){
+				$("#msg").html('');
+				$("#footer").hide();
+		} else {
+				var msg = val==="select"? "Please Select a Function" :val;
+				$("#msg").html(msg);
+				$("#msg").css("color","red");
+				$("#footer").show();
+		}
+	};
+	self.AddValue = function(value){
+		return self.DynamicArray.push(value);
+	};
+	self.ReloadPage=function(){
+		setTimeout(function() {
+			window.location.reload(true);
+		},5000);
+	};
+};
+
+$(function() {
+	ko.applyBindings(manipulationViewModel,$("#manipulate")[0]);
+});
+
+</script>
+</body>
+</html>
