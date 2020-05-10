@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title> Computed Observable Array - Page Redirection </title>
+	<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+	<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+	<link rel="stylesheet" href="./bootstrap.css">
+<style>
+#computed{
+	width:1200px;
+	height:550px;
+	margin-top:100px;
+}
+</style>
+	
+</head>
+<body>
+
+<div class="container">
+	<div id="computed">	
+		<div class="page-header">
+			<h1> Computed Observable Array with Page Redirection <h1>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<Label For="FName">FirstName</label>
+		<input type="text" data-bind="value:FirstName"/>
+		<Label For="LName">LastName</label>
+		<input type="text" data-bind="value:LastName"/>
+		<button data-bind="click:Redirect">Redirect</button>
+		<br/>
+		<br/>
+		<p style="color:red" data-bind="text:ErrorMessage()"></p>
+	<div>
+</div>
+<script type="text/javascript">
+var computedViewModel=function() {
+	self.FirstName=ko.observable();
+	self.LastName=ko.observable();
+	self.ErrorMessage=ko.observable();
+	self.FullName=ko.computed(function() {
+		if(self.FirstName() || self.LastName()){
+		return self.FirstName() + "_" + self.LastName();
+		}
+	});
+	self.Redirect=function(){
+		var subself=this;
+		if(subself.FullName()){
+			window.location.href="./RedirectingPage.html?FullName="+subself.FullName();
+		}
+		else {
+		   self.ErrorMessage("FirstName or LastName should not be Empty. Please Enter text in any one of the Field");
+		   setTimeout(function() {
+				self.ErrorMessage(undefined);
+			},5000);
+		}
+	};
+};
+$(function() {
+ko.applyBindings(computedViewModel, $("#computed")[0]);
+});
+</script>
+</body>
+</html>

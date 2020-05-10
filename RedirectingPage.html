@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title> Redirected Page</title>
+	<script type="text/javascript" src="./knockout-3.5.1.js"></script>
+	<script type="text/javascript" src="./jquery-3.4.1.js"></script>
+	<link rel="stylesheet" href="./bootstrap.css">
+<style>
+#welcome {
+	width:1100px;
+	height:500px;
+	border: 3px solid green;
+	background-color:lightblue;
+}
+p {
+font-size: 40px;
+}
+</style>
+</head>
+<body>
+<script type="text/javascript">
+	var welcomeViewModel=function(wtext) {
+		self.WelcomeText=ko.observable(wtext);
+	};
+	$(function () {
+		var urlParameters=window.location.search.split("=");
+		if (urlParameters.length>0){
+			var welcome=new welcomeViewModel(urlParameters[1]);
+			ko.applyBindings(welcome,$("#welcome")[0]);
+		}
+});
+</script>
+<div class="page-header">
+	<h1> This is the Secondary Page for the <b style="color:green">Computed Observable Array - Page Redirection.html</b> Page </h1>
+	</div
+<div class="container">
+	<div id="welcome">
+		<p class="text-center" data-bind="text:WelcomeText()"></p>
+	</div>
+</div>
+</body>
+</html>
